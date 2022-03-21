@@ -33,5 +33,5 @@ export const Column = styled.div`
     flex-flow: column; 
     align-items: center;
     margin-left: 15px;
-
+    background-color: lightblue;
 `
