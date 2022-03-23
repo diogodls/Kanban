@@ -1,19 +1,19 @@
-import React from "react";
+import React, { Children, ReactNode } from "react";
 import * as C from "../../styles/CardStyles"
 
 type CardProps = {
-    titulo: string
+    titulo: string,
+    children: ReactNode
 }
 
-export default function Card(props: CardProps){
+export default function Card({titulo, children}: CardProps){
 
     return (
         <C.Card>
             <C.Header>
-                {props.titulo}
+                {titulo}
             </C.Header>
-
-            
+            {children}
         </C.Card>
     );
 }

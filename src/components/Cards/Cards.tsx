@@ -2,48 +2,47 @@ import { useState } from "react";
 import Card from "./Card";
 import * as C from "../../styles/CardStyles"
 import { Droppable, Draggable, DragDropContext, DropResult } from "react-beautiful-dnd";
+import { v4 } from "uuid"
 
-const initialCards = [
-    {
-        titulo: 'Primeiro',
-        id: "1"
-    },
-    {
-        titulo: 'Segundo',
-        id: "2"
-    },
-    {
-        titulo: 'Terceiro',
-        id: "3"
-    },
-    {
-        titulo: 'Quarto',
-        id: "4"
-    }
-]
+type CardsType = {
+    titulo: string,
+    id: string,
+    column: number
+}
 
-const initialCards2= [ 
-    {
-        titulo: 'Quinto',
-        id: "5"
-    },
-    {
-        titulo: 'Sexto',
-        id: "6"
-    },
-    {
-        titulo: 'Sétimo',
-        id: "7"
-    },
-    {
-        titulo: 'Oitavo',
-        id: "8"
-    },
-]
+const initialState: CardsType[] = []
+const initialState2: CardsType[] = []
 
 export default function Cards(){
-    const [cards, setCards] = useState(initialCards)
-    const [cards2, setCards2] = useState(initialCards2)
+    let [cards, setCards] = useState(initialState)
+    const [cards2, setCards2] = useState(initialState2)
+    const [title, setTitle] = useState('');
+
+    function handleTitleInput(e: React.ChangeEvent<HTMLInputElement>){
+        setTitle(e.target.value)
+    }
+
+    function handleAddButton(){
+        if(!title) return;
+        cards.push({
+            titulo: title,
+            id: v4(),
+            column: 1
+        });
+        setTitle('');
+        setCards(cards);
+    }
+
+    function handleRemoveButton(id:string, column:string){
+        if(!id) return;
+
+        if(column == 'cards'){
+            setCards(cards.filter(item => item.id != id));
+        }else{
+            setCards2(cards2.filter(item => item.id != id));
+        }
+    }
+    
 
     const onDragEnd = (result: DropResult) => {
         console.log(result)
@@ -92,6 +91,7 @@ export default function Cards(){
                 <C.Cards>
                     
                     <C.Column>
+                        <div><h2>Coluna 1</h2></div>
                         <Droppable droppableId="coluna">
                                 {(provided) => (
                                     <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -99,7 +99,9 @@ export default function Cards(){
                                             <Draggable draggableId={id} key={id} index={index}>
                                                 {(provided) => (
                                                     <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                                        <Card titulo={titulo} ></Card>
+                                                        <Card titulo={titulo} >
+                                                            <button onClick={() => handleRemoveButton(id, 'cards')}>Remover</button>
+                                                        </Card>
                                                     </div>
                                                 )}
                                             </Draggable>
@@ -111,14 +113,17 @@ export default function Cards(){
                     </C.Column>
 
                     <C.Column>
+                        <div><h2>Coluna 2</h2></div>
                         <Droppable droppableId="coluna2">
                                 {(provided) => (
                                     <div {...provided.droppableProps} ref={provided.innerRef}>
-                                        {cards2.map(({titulo, id}, index) => (
+                                        {cards2.map(({titulo, id, column}, index) => (
                                             <Draggable draggableId={id} key={id} index={index}>
                                                 {(provided) => (
                                                     <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                                        <Card titulo={titulo} ></Card>
+                                                        <Card titulo={titulo} >
+                                                            <p><button onClick={() => handleRemoveButton(id, 'cards2')}>Remover</button></p>
+                                                        </Card>
                                                     </div>
                                                 )}
                                             </Draggable>
@@ -129,6 +134,15 @@ export default function Cards(){
                         </Droppable>
                     </C.Column>
                     
+                    <div> 
+                        <input type="text" value={title} onChange={handleTitleInput}/>
+
+                        <div>
+                            <button onClick={handleAddButton}>Adicionar</button>
+                        </div>
+
+                    </div>
+
                 </C.Cards>
                 
             </DragDropContext>

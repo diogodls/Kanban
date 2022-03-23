@@ -25,7 +25,6 @@ export const Cards = styled.section`
     display: flex;
     flex-flow: row;
     margin: 105px 15px;
-
 `
 
 export const Column = styled.div`
