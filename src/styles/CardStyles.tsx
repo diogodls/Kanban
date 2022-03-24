@@ -27,8 +27,9 @@ export const Header = styled.header`
 
 export const Cards = styled.section`
     display: flex;
+    justify-content: center;
     flex-flow: row;
-    margin: 105px 15px;
+    margin: 10px 15px;
 `
 
 export const Column = styled.div`
@@ -37,4 +38,10 @@ export const Column = styled.div`
     align-items: center;
     margin-left: 15px;
     background-color: lightblue;
+`
+
+export const Input = styled.div`
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
 `

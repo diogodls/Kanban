@@ -1,6 +1,5 @@
-import Cards from "./components/Cards/Cards";
+import Cards from "./components/Cards/CardsSection";
 import Navbar from "./components/Navbar/Navbar";
-import MainRoutes from "./routes/MainRoutes";
 
 export default function App(){
   return (
