@@ -11,7 +11,9 @@ export default function Card({titulo, children}: CardProps){
     return (
         <C.Card>
             <C.Header>
-                {titulo}
+                <div>
+                    {titulo}
+                </div>
             </C.Header>
             {children}
         </C.Card>

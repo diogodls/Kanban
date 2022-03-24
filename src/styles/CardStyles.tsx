@@ -7,8 +7,10 @@ export const Card = styled.div`
     align-items: center;
     background-color: lightslategray;
     padding: 20px;
-    width: auto;
+    width: 75px;
+    height: 75px;
     border-radius: 4px;
+
 `
 
 export const Header = styled.header`
@@ -18,7 +20,9 @@ export const Header = styled.header`
     background-color: #cccccc;
     color: black;
     border-radius: 4px;
-    cursor: pointer;
+    width: 40px;
+    display: flex;
+    justify-content: center;
 `
 
 export const Cards = styled.section`

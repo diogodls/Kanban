@@ -3,11 +3,11 @@ import Card from "./Card";
 import * as C from "../../styles/CardStyles"
 import { Droppable, Draggable, DragDropContext, DropResult } from "react-beautiful-dnd";
 import { v4 } from "uuid"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type CardsType = {
     titulo: string,
-    id: string,
-    column: number
+    id: string
 }
 
 const initialState: CardsType[] = []
@@ -26,8 +26,7 @@ export default function Cards(){
         if(!title) return;
         cards.push({
             titulo: title,
-            id: v4(),
-            column: 1
+            id: v4()
         });
         setTitle('');
         setCards(cards);
@@ -91,7 +90,11 @@ export default function Cards(){
                 <C.Cards>
                     
                     <C.Column>
-                        <div><h2>Coluna 1</h2></div>
+
+                        <div>
+                            <h2>Coluna 1</h2>
+                        </div>
+
                         <Droppable droppableId="coluna">
                                 {(provided) => (
                                     <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -100,7 +103,7 @@ export default function Cards(){
                                                 {(provided) => (
                                                     <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                                                         <Card titulo={titulo} >
-                                                            <button onClick={() => handleRemoveButton(id, 'cards')}>Remover</button>
+                                                            <button style={{position:'relative', bottom:'67px', left:'40px'}} onClick={() => handleRemoveButton(id, 'cards')}>X</button>
                                                         </Card>
                                                     </div>
                                                 )}
@@ -113,16 +116,20 @@ export default function Cards(){
                     </C.Column>
 
                     <C.Column>
-                        <div><h2>Coluna 2</h2></div>
+                        
+                        <div>
+                            <h2>Coluna 2</h2>
+                        </div>
+
                         <Droppable droppableId="coluna2">
                                 {(provided) => (
                                     <div {...provided.droppableProps} ref={provided.innerRef}>
-                                        {cards2.map(({titulo, id, column}, index) => (
+                                        {cards2.map(({titulo, id}, index) => (
                                             <Draggable draggableId={id} key={id} index={index}>
                                                 {(provided) => (
                                                     <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                                                         <Card titulo={titulo} >
-                                                            <p><button onClick={() => handleRemoveButton(id, 'cards2')}>Remover</button></p>
+                                                            <button style={{position:'relative', bottom:'67px', left:'40px'}} onClick={() => handleRemoveButton(id, 'cards2')}>X</button>
                                                         </Card>
                                                     </div>
                                                 )}

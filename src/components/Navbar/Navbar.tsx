@@ -15,11 +15,7 @@ export default function Navbar(){
                 <N.NavBrand>
                     Logo
                 </N.NavBrand>
-
-                <div>
-                    <button onClick={handleNewCard}>Novo Card</button>
-                </div>
-
+    
             </N.Navbar>
         </div>
     );
