@@ -1,4 +1,4 @@
-import React, { Children, ReactNode } from "react";
+import { ReactNode } from "react";
 import * as C from "../../styles/CardStyles"
 
 type CardProps = {

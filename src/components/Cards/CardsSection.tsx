@@ -1,17 +1,17 @@
 import { useState } from "react";
-import Card from "./Card";
 import * as C from "../../styles/CardStyles"
-import { Droppable, Draggable, DragDropContext, DropResult } from "react-beautiful-dnd";
+import { Droppable, DragDropContext, DropResult } from "react-beautiful-dnd";
 import { v4 } from "uuid"
 import Cards from "./Cards"
 
-type CardsType = {
+type CardType = {
     titulo: string,
-    id: string
+    id: string,
+    column: string
 }
 
-const initialState: CardsType[] = []
-const initialState2: CardsType[] = []
+const initialState: CardType[] = []
+const initialState2: CardType[] = []
 
 export default function CardsSection(){
     let [cards, setCards] = useState(initialState)
@@ -26,7 +26,8 @@ export default function CardsSection(){
         if(!title) return;
         cards.push({
             titulo: title,
-            id: v4()
+            id: v4(),
+            column: 'cards'
         });
         setTitle('');
         setCards(cards);
@@ -99,8 +100,8 @@ export default function CardsSection(){
 
                         <Droppable droppableId="coluna">
                                 {(provided) => (
-                                    <div {...provided.droppableProps} ref={provided.innerRef}>
-                                        <Cards cards={cards}/>
+                                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                                        <Cards cards={cards} column="cards" rmCard={handleRemoveButton} />
                                         {provided.placeholder}
                                     </div>
                                 )}
@@ -116,22 +117,13 @@ export default function CardsSection(){
 
                         <Droppable droppableId="coluna2">
                                 {(provided) => (
-                                    <div {...provided.droppableProps} ref={provided.innerRef}>
-                                        {cards2.map(({titulo, id}, index) => (
-                                            <Draggable draggableId={id} key={id} index={index}>
-                                                {(provided) => (
-                                                    <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                                        <Card titulo={titulo} >
-                                                            <button style={{position:'relative', bottom:'67px', left:'40px'}} onClick={() => handleRemoveButton(id, 'cards2')}>X</button>
-                                                        </Card>
-                                                    </div>
-                                                )}
-                                            </Draggable>
-                                        ))}
+                                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                                        <Cards cards={cards2} column="cards2" rmCard={handleRemoveButton} />
                                         {provided.placeholder}
                                     </div>
                                 )}
                         </Droppable>
+                        
                     </C.Column>
                     
                 </C.Cards>

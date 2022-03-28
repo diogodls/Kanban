@@ -1,21 +1,27 @@
+import { HTMLAttributes } from "react";
 import {Draggable } from "react-beautiful-dnd";
 import Card from "./Card"
 
-type CardsProps = {
-    cards[
-        {titulo: string, id: string}
-    ]
+type Card = {
+    titulo: string,
+    id: string,
 }
 
-export default function Cards({cards}: CardsProps){
+interface CardsProps extends HTMLAttributes<HTMLDivElement>{
+    cards: Card[],
+    column: string,
+    rmCard: (id:string, column:string) => void;
+} 
+
+const Cards:React.FC<CardsProps> = ({cards, rmCard, column, className, ...props}) => {
     return (
-        <div>
+        <div className={`diogo ${className}`} {...props}>
             {cards.map(({titulo, id}, index) => (
                 <Draggable draggableId={id} key={id} index={index}>
                     {(provided) => (
-                        <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                            <Card titulo={titulo} >
-                                <button style={{position:'relative', bottom:'67px', left:'40px'}} onClick={() => handleRemoveButton(id, 'cards')}>X</button>
+                        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                            <Card titulo={titulo}>
+                                <button style={{position:'relative', bottom:'67px', left:'40px'}} onClick={() => {rmCard(id, column)}} >X</button>
                             </Card>
                         </div>
                     )}
@@ -24,3 +30,5 @@ export default function Cards({cards}: CardsProps){
         </div>
     );
 }
+
+export default Cards;
